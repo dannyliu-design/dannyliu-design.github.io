@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danny Liu | Mechanical Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Fixed Lucide Version for Mac/Safari stability -->
+    <script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' },
+                        blue: { 50: '#eff6ff', 100: '#dbeafe', 600: '#2563eb', 700: '#1d4ed8' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { Menu, X, Linkedin, Mail, Phone, Download, ExternalLink, Cpu, Wind, Battery, Thermometer, PenTool, GraduationCap, Briefcase, Award, ChevronRight } = window.lucideReact;
+
+        const Portfolio = () => {
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+            const [scrolled, setScrolled] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 20);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const navigation = [
+                { name: 'About', href: '#about' },
+                { name: 'Experience', href: '#experience' },
+                { name: 'Projects', href: '#projects' },
+                { name: 'Skills', href: '#skills' },
+                { name: 'Contact', href: '#contact' },
+            ];
+
+            const handleNavClick = (e, href) => {
+                e.preventDefault();
+                const element = document.querySelector(href);
+                if (element) {
+                    const offsetPosition = element.getBoundingClientRect().top + window.pageYOffset - 80;
+                    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                }
+                setIsMenuOpen(false);
+            };
+
+            return (
+                <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+                    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'}`}>
+                        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center">
+                                <div className="flex items-center"><span className="text-2xl font-bold text-blue-900 tracking-tight">DL.</span></div>
+                                <div className="hidden md:flex space-x-8">
+                                    {navigation.map((item) => (
+                                        <a key={item.name} href={item.href} onClick={(e) => handleNavClick(e, item.href)} className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">{item.name}</a>
+                                    ))}
+                                </div>
+                                <div className="md:hidden">
+                                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-slate-600 hover:text-blue-600 focus:outline-none">{isMenuOpen ? <X size={24} /> : <Menu size={24} />}</button>
+                                </div>
+                            </div>
+                        </div>
+                        {isMenuOpen && (
+                            <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg border-t border-slate-100">
+                                <div className="px-4 py-4 space-y-4">
+                                    {navigation.map((item) => (
+                                        <a key={item.name} href={item.href} onClick={(e) => handleNavClick(e, item.href)} className="block text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 px-2 py-1 rounded">{item.name}</a>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </nav>
+
+                    <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-white overflow-hidden">
+                        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#2563eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                            <div className="lg:w-2/3">
+                                <h1 className="text-5xl sm:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">Danny Liu</h1>
+                                <h2 className="text-2xl sm:text-3xl font-medium text-blue-600 mb-6">Mechanical Engineer & Thermal Systems Specialist</h2>
+                                <p className="text-lg text-slate-600 leading-relaxed mb-8 max-w-2xl">Specializing in Battery Thermal Management, CFD Simulation, and Heat Transfer. Bridging the gap between theoretical modeling and real-world prototyping.</p>
+                                <div className="flex flex-wrap gap-4">
+                                    <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20">Contact Me</a>
+                                    <a href="#" onClick={(e) => { e.preventDefault(); alert("In a real deployment, this would download your PDF resume."); }} className="inline-flex items-center px-6 py-3 bg-white text-slate-700 border border-slate-200 font-semibold rounded-lg hover:bg-slate-50 transition-colors"><Download size={18} className="mr-2" /> Download Resume</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="bg-slate-900 py-12 text-white">
+                        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                                <div className="p-4"><Wind size={32} className="mx-auto mb-3 text-blue-400" /><div className="font-bold text-lg">CFD Simulation</div><div className="text-slate-400 text-sm">Ansys Fluent Expert</div></div>
+                                <div className="p-4"><Battery size={32} className="mx-auto mb-3 text-blue-400" /><div className="font-bold text-lg">Battery Systems</div><div className="text-slate-400 text-sm">Thermal Management</div></div>
+                                <div className="p-4"><PenTool size={32} className="mx-auto mb-3 text-blue-400" /><div className="font-bold text-lg">Design</div><div className="text-slate-400 text-sm">Creo & SolidWorks</div></div>
+                                <div className="p-4"><Thermometer size={32} className="mx-auto mb-3 text-blue-400" /><div className="font-bold text-lg">Thermodynamics</div><div className="text-slate-400 text-sm">Heat Transfer Analysis</div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section id="about" className="py-20 bg-white">
+                        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex flex-col md:flex-row gap-12 items-center">
+                                <div className="md:w-1/2">
+                                    <h3 className="text-blue-600 font-semibold tracking-wide uppercase mb-2">About Me</h3>
+                                    <h2 className="text-3xl font-bold text-slate-900 mb-6">Engineering Solutions for Complex Thermal Challenges</h2>
+                                    <div className="space-y-4 text-slate-600">
+                                        <p>I am currently pursuing a Master of Engineering in Mechanical & Industrial Engineering at the University of Wisconsin-Milwaukee (Expected 2026).</p>
+                                        <p>My journey began in Taiwan, where I completed my Bachelor's and Master's in an accelerated program, focusing heavily on lithium-ion battery optimization. I have since gained hands-on industry experience designing cooling systems for electronics.</p>
+                                    </div>
+                                </div>
+                                <div className="md:w-1/2 bg-slate-100 rounded-2xl p-8 border border-slate-200">
+                                    <h4 className="text-xl font-bold mb-6 flex items-center"><GraduationCap className="mr-2 text-blue-600" /> Education</h4>
+                                    <div className="space-y-6">
+                                        <div className="relative pl-8 border-l-2 border-blue-200"><div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-blue-600"></div><h5 className="font-bold text-slate-900">Master of Engineering (ME)</h5><div className="text-blue-600 font-medium">University of Wisconsin-Milwaukee</div><div className="text-sm text-slate-500">Expected May 2026 | Milwaukee, WI</div></div>
+                                        <div className="relative pl-8 border-l-2 border-slate-200"><div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-300"></div><h5 className="font-bold text-slate-900">M.S. & B.S. in Mechanical Engineering</h5><div className="text-blue-600 font-medium">Chung Yuan Christian University</div><div className="text-sm text-slate-500">Sep 2020 - June 2024 | Taoyuan, Taiwan</div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="experience" className="py-20 bg-slate-50">
+                        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="text-center mb-16"><h3 className="text-blue-600 font-semibold tracking-wide uppercase mb-2">Career Timeline</h3><h2 className="text-3xl font-bold text-slate-900">Professional Experience</h2></div>
+                            <div className="space-y-8">
+                                <div className="bg-white rounded-xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                                    <div className="flex flex-col md:flex-row justify-between md:items-start mb-4"><div><h4 className="text-xl font-bold text-slate-900">Asia Vital Components Co., Ltd</h4><p className="text-blue-600 font-medium">Fan & Thermal Systems Engineer</p></div><div className="text-slate-500 text-sm mt-2 md:mt-0 bg-slate-100 px-3 py-1 rounded-full inline-block">Oct 2023 - June 2024</div></div>
+                                    <ul className="space-y-3 text-slate-600 list-disc pl-5"><li>Designed high-efficiency fan blades using <strong>Creo Parametric</strong>.</li><li>Conducted <strong>CFD simulations in Ansys Fluent</strong>.</li><li>Implemented biomimetic design principles to reduce noise.</li></ul>
+                                </div>
+                                <div className="bg-white rounded-xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                                    <div className="flex flex-col md:flex-row justify-between md:items-start mb-4"><div><h4 className="text-xl font-bold text-slate-900">ITRI</h4><p className="text-blue-600 font-medium">Research Intern - Surface Engineering</p></div><div className="text-slate-500 text-sm mt-2 md:mt-0 bg-slate-100 px-3 py-1 rounded-full inline-block">May 2023 - Oct 2023</div></div>
+                                    <ul className="space-y-3 text-slate-600 list-disc pl-5"><li>Developed nano-coatings to optimize heat exchangers.</li><li>Utilized hydrophobic etching for condensation efficiency.</li><li>Designed fin structures using <strong>Autodesk Inventor</strong>.</li></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="projects" className="py-20 bg-white">
+                        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="text-center mb-16"><h3 className="text-blue-600 font-semibold tracking-wide uppercase mb-2">Portfolio</h3><h2 className="text-3xl font-bold text-slate-900">Featured Projects</h2></div>
+                            <div className="grid md:grid-cols-3 gap-8">
+                                <div className="group bg-slate-50 rounded-xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col">
+                                    <div className="h-48 bg-slate-200 relative overflow-hidden flex items-center justify-center bg-slate-800 text-slate-400"><div className="text-center"><Wind size={40} className="mx-auto mb-2 opacity-50" /><span className="text-sm">Fan Blade CFD Simulation</span></div></div>
+                                    <div className="p-6 flex-1 flex flex-col"><h4 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">Biomimetic Fan Optimization</h4><p className="text-slate-600 text-sm mb-4 flex-1">Reduced aerodynamic noise by designing feather-inspired blade geometries.</p><div className="flex flex-wrap gap-2 mt-auto"><span className="text-xs font-medium bg-blue-100 text-blue-700 px-2 py-1 rounded">Ansys Fluent</span><span className="text-xs font-medium bg-blue-100 text-blue-700 px-2 py-1 rounded">Creo</span></div></div>
+                                </div>
+                                <div className="group bg-slate-50 rounded-xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col">
+                                    <div className="h-48 bg-slate-200 relative overflow-hidden flex items-center justify-center bg-slate-800 text-slate-400"><div className="text-center"><Battery size={40} className="mx-auto mb-2 opacity-50" /><span className="text-sm">Battery Thermal Map</span></div></div>
+                                    <div className="p-6 flex-1 flex flex-col"><h4 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">Li-ion Battery Thermal Mgt.</h4><p className="text-slate-600 text-sm mb-4 flex-1">Thesis: Designed a cooling flow path to disrupt boundary layers.</p><div className="flex flex-wrap gap-2 mt-auto"><span className="text-xs font-medium bg-blue-100 text-blue-700 px-2 py-1 rounded">Heat Transfer</span></div></div>
+                                </div>
+                                <div className="group bg-slate-50 rounded-xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col">
+                                    <div className="h-48 bg-slate-200 relative overflow-hidden flex items-center justify-center bg-slate-800 text-slate-400"><div className="text-center"><Cpu size={40} className="mx-auto mb-2 opacity-50" /><span className="text-sm">Heat Exchanger Micro-structure</span></div></div>
+                                    <div className="p-6 flex-1 flex flex-col"><h4 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">Nano-Coating for Condensers</h4><p className="text-slate-600 text-sm mb-4 flex-1">Applied nanotechnology to modify surface tension.</p><div className="flex flex-wrap gap-2 mt-auto"><span className="text-xs font-medium bg-blue-100 text-blue-700 px-2 py-1 rounded">Inventor</span></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="skills" className="py-20 bg-slate-900 text-white">
+                        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex flex-col md:flex-row gap-12">
+                                <div className="md:w-1/3"><h3 className="text-blue-400 font-semibold tracking-wide uppercase mb-2">Expertise</h3><h2 className="text-3xl font-bold mb-6">Technical Skills</h2></div>
+                                <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                                    <div><h4 className="text-xl font-bold mb-4 flex items-center"><Wind size={20} className="mr-2 text-blue-400" /> Analysis & Simulation</h4><div className="flex flex-wrap gap-2">{['Ansys Fluent', 'CFD', 'MATLAB', 'Thermodynamics', 'Heat Transfer'].map(skill => (<span key={skill} className="bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-sm text-slate-200">{skill}</span>))}</div></div>
+                                    <div><h4 className="text-xl font-bold mb-4 flex items-center"><PenTool size={20} className="mr-2 text-blue-400" /> CAD & Design</h4><div className="flex flex-wrap gap-2">{['Creo Parametric', 'SolidWorks', 'Autodesk Inventor', '3D Modeling'].map(skill => (<span key={skill} className="bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-sm text-slate-200">{skill}</span>))}</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="contact" className="py-20 bg-blue-50">
+                        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                            <h2 className="text-3xl font-bold text-slate-900 mb-8">Let's Connect</h2>
+                            <div className="grid md:grid-cols-3 gap-6">
+                                <a href="mailto:dannyliu1104@gmail.com" className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col items-center group"><div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4"><Mail size={24} /></div><h4 className="font-bold text-slate-900 mb-1">Email</h4><p className="text-slate-500 text-sm break-all">dannyliu1104@gmail.com</p></a>
+                                <a href="https://www.linkedin.com/in/teen-liu/" target="_blank" rel="noreferrer" className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col items-center group"><div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4"><Linkedin size={24} /></div><h4 className="font-bold text-slate-900 mb-1">LinkedIn</h4><p className="text-slate-500 text-sm">linkedin.com/in/teen-liu</p></a>
+                                <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col items-center group"><div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4"><Phone size={24} /></div><h4 className="font-bold text-slate-900 mb-1">Phone</h4><p className="text-slate-500 text-sm">(808) 462-1205</p></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <footer className="bg-white py-8 border-t border-slate-200">
+                        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+                            <div className="text-slate-500 text-sm mb-4 md:mb-0">© 2024 Danny Liu. All rights reserved.</div>
+                            <div className="flex space-x-6"><a href="https://www.linkedin.com/in/teen-liu/" className="text-slate-400 hover:text-blue-600 transition-colors"><Linkedin size={20} /></a><a href="mailto:dannyliu1104@gmail.com" className="text-slate-400 hover:text-blue-600 transition-colors"><Mail size={20} /></a></div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<Portfolio />);
+    </script>
+</body>
+</html>
